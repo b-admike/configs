@@ -1,0 +1,31 @@
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[user]
+	name = ssh24
+	email = sshasan10@hotmail.com
+[push]
+	default = simple
+[alias]
+  branches = branch -vva
+  cb = "!f() { git rev-parse --abbrev-ref HEAD; }; f"
+  chk = checkout
+  chkm = checkout master
+  br = branch
+  del = "!f() { git branch -D $1; }; f"
+  st = status
+  l = log --decorate
+  fp = "!f() { git push $1 +$2; }; f"
+  fpoc = "!f() { git fp origin `git cb`; }; f"
+  amend = commit --amend --no-edit
+  rbm = "!f() { git fet && git rb origin master; }; f"
+  rb = "!f() { git rebase -i $1/$2; }; f"
+  do = "!f() { git add $1 && git amend; }; f"
+  doup = "!f() { git add $1 && git amend && git fpoc; }; f"	 
+  fet = fetch -p
+  rem = remote -v
+  cp = "!f() { git cherry-pick $1; }; f"
+  purge = !"git branch --merged | grep -Ev '\\*|master|develop|staging' | xargs -n 1 git branch -d"
+[core]
+  editor = vim
