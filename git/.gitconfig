@@ -24,8 +24,11 @@
   do = "!f() { git add $1 && git amend; }; f"
   doup = "!f() { git add $1 && git amend && git fpoc; }; f"	 
   fet = fetch -p
+  fetu = fetch -p upstream
   rem = remote -v
+  remadd = "!f() { git remote add upstream https://github.com/$1/$2.git; }; f"
   cp = "!f() { git cherry-pick $1; }; f"
-  purge = !"git branch --merged | grep -Ev '\\*|master|develop|staging' | xargs -n 1 git branch -d"
+  purge = !"git branch --merged | grep -Ev '\\*|master' | xargs -n 1 git branch -d"
+  send = "!f() { git amend && git fpoc; }; f"
 [core]
   editor = vim
