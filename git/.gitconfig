@@ -8,24 +8,33 @@
 [push]
 	default = simple
 [alias]
+  br = branch
   branches = branch -vva
   cb = "!f() { git rev-parse --abbrev-ref HEAD; }; f"
-  chk = checkout
   chkm = checkout master
-  br = branch
-  del = "!f() { git branch -D $1; }; f"
+  chkb = "!f() { git checkout -b $1; }; f"
+  delb = "!f() { git branch -D $1; }; f"
+  purge = !"git branch --merged | grep -Ev '\\*|master' | xargs -n 1 git branch -d"
   st = status
-  l = log --decorate
-  fp = "!f() { git push $1 +$2; }; f"
-  fpoc = "!f() { git fp origin `git cb`; }; f"
+  dl = log --decorate
+  addup = "!f() { git add $1; }; f"
+  stage = add .
+  rmv = "!f() { git rm --cached $1; }; f"
   amend = commit --amend --no-edit
+  cp = "!f() { git cherry-pick $1; }; f"
+  rem = remote -v
+  remadd = "!f() { git remote add $1 https://github.com/$2/$3.git; }; f"
+  remaddu = "!f() { git remote add upstream https://github.com/$1/$2.git; }; f"
+  remrmv = "!f() { git remote remove $1; }; f"
+  fet = fetch -p
+  fetu = fetch -p upstream
   rbm = "!f() { git fet && git rb origin master; }; f"
   rb = "!f() { git rebase -i $1/$2; }; f"
-  do = "!f() { git add $1 && git amend; }; f"
-  doup = "!f() { git add $1 && git amend && git fpoc; }; f"	 
-  fet = fetch -p
-  rem = remote -v
-  cp = "!f() { git cherry-pick $1; }; f"
-  purge = !"git branch --merged | grep -Ev '\\*|master|develop|staging' | xargs -n 1 git branch -d"
+  fp = "!f() { git push $1 +$2; }; f"
+  fpo = "!f() { git push origin +$2; }; f"
+  fpoc = "!f() { git fp origin `git cb`; }; f"
+  prep = "!f() { git add $1 && git amend; }; f"
+  prepup = "!f() { git add $1 && git amend && git fpoc; }; f"	 
+  send = "!f() { git amend && git fpoc; }; f"
 [core]
   editor = vim
